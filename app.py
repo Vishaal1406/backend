@@ -18,13 +18,12 @@ def bfhl():
             email = request.json.get("email", "")
             roll_number = request.json.get("roll_number", "")
             
-            if not email.endswith("srmist.edu.in"):
+            if email and not email.endswith("srmist.edu.in"):
                 return jsonify({"is_success": False, "message": "Invalid email format"}), 400
             
             roll_number_pattern = re.compile(r'^RA\d{14}$')
-            if not roll_number_pattern.match(roll_number):
-                return jsonify({"is_success": False, "message": "Invalid roll number format"}), 400
-            
+            if roll_number and not roll_number_pattern.match(roll_number):  
+                return jsonify({"is_success": False, "message": "Invalid roll number format"}), 400            
             numbers = [item for item in data if item.isdigit()]
             alphabets = [item for item in data if item.isalpha()]
             lower_alphabets = [char for char in alphabets if char.islower()]
